@@ -1,3 +1,16 @@
 .DS_Store
 
-IMMICH_KEY
+# Xcode user data and build output
+xcuserdata/
+DerivedData/
+build/
+*.xcuserstate
+*.moved-aside
+*.xccheckout
+*.xcscmblueprint
+
+# Swift Package Manager
+.build/
+.swiftpm/
+
+FastCollection/FastCollection/Secrets.swift

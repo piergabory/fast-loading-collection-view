@@ -6,14 +6,38 @@
 	objectVersion = 90;
 	objects = {
 
+/* Begin PBXBuildFile section */
+		8B36606A301BDDCF0024BCA6 /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = 8B366069301BDDCF0024BCA6 /* README.md */; };
+		8B64C38C301BFC8800BF18DD /* Immich in Frameworks */ = {isa = PBXBuildFile; productRef = 8B64C38B301BFC8800BF18DD /* Immich */; };
+/* End PBXBuildFile section */
+
 /* Begin PBXFileReference section */
 		000000000000000000000120 /* FastCollection.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = FastCollection.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		8B366069301BDDCF0024BCA6 /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; name = README.md; path = ../README.md; sourceTree = SOURCE_ROOT; };
 /* End PBXFileReference section */
+
+/* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
+		8B18B069301BF4B600AD8935 /* Exceptions for "Local Packages" folder in "FastCollection" target */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				Immich,
+			);
+			target = 000000000000000100000000 /* FastCollection */;
+		};
+/* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
 		000000000000000000000010 /* FastCollection */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
 			path = FastCollection;
+			sourceTree = "<group>";
+		};
+		8B18B067301BF47000AD8935 /* Local Packages */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			exceptions = (
+				8B18B069301BF4B600AD8935 /* Exceptions for "Local Packages" folder in "FastCollection" target */,
+			);
+			path = "Local Packages";
 			sourceTree = "<group>";
 		};
 /* End PBXFileSystemSynchronizedRootGroup section */
@@ -22,6 +46,7 @@
 		000000000000000130000000 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			files = (
+				8B64C38C301BFC8800BF18DD /* Immich in Frameworks */,
 			);
 		};
 /* End PBXFrameworksBuildPhase section */
@@ -30,7 +55,10 @@
 		000000000000000000000001 = {
 			isa = PBXGroup;
 			children = (
+				8B18B067301BF47000AD8935 /* Local Packages */,
 				000000000000000000000010 /* FastCollection */,
+				8B366069301BDDCF0024BCA6 /* README.md */,
+				8B64C38A301BFC8800BF18DD /* Frameworks */,
 				000000000000000000000020 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -41,6 +69,13 @@
 				000000000000000000000120 /* FastCollection.app */,
 			);
 			name = Products;
+			sourceTree = "<group>";
+		};
+		8B64C38A301BFC8800BF18DD /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Frameworks;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -58,8 +93,12 @@
 			);
 			fileSystemSynchronizedGroups = (
 				000000000000000000000010 /* FastCollection */,
+				8B18B067301BF47000AD8935 /* Local Packages */,
 			);
 			name = FastCollection;
+			packageProductDependencies = (
+				8B64C38B301BFC8800BF18DD /* Immich */,
+			);
 			productName = MyApp;
 			productReference = 000000000000000000000120 /* FastCollection.app */;
 			productType = "com.apple.product-type.application";
@@ -88,6 +127,9 @@
 			);
 			mainGroup = 000000000000000000000001;
 			minimizedProjectReferenceProxies = 1;
+			packageReferences = (
+				C0DE00000000000000000022 /* XCRemoteSwiftPackageReference "swift-format" */,
+			);
 			preferredProjectObjectVersion = 90;
 			productRefGroup = 000000000000000000000020 /* Products */;
 			projectDirPath = "";
@@ -102,6 +144,7 @@
 		000000000000000140000000 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			files = (
+				8B36606A301BDDCF0024BCA6 /* README.md in Resources */,
 			);
 		};
 /* End PBXResourcesBuildPhase section */
@@ -254,7 +297,9 @@
 				CURRENT_PROJECT_VERSION = 1;
 				ENABLE_APP_SANDBOX = YES;
 				ENABLE_PREVIEWS = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = NO;
 				ENABLE_USER_SELECTED_FILES = readonly;
+				GCC_TREAT_WARNINGS_AS_ERRORS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphoneos*]" = YES;
 				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphonesimulator*]" = YES;
@@ -279,8 +324,11 @@
 				SWIFT_APPROACHABLE_CONCURRENCY = YES;
 				SWIFT_DEFAULT_ACTOR_ISOLATION = MainActor;
 				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_STRICT_CONCURRENCY = complete;
+				SWIFT_STRICT_MEMORY_SAFETY = YES;
+				SWIFT_TREAT_WARNINGS_AS_ERRORS = YES;
 				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
-				SWIFT_VERSION = 5.0;
+				SWIFT_VERSION = 6.0;
 				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Debug;
@@ -292,7 +340,9 @@
 				CURRENT_PROJECT_VERSION = 1;
 				ENABLE_APP_SANDBOX = YES;
 				ENABLE_PREVIEWS = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = NO;
 				ENABLE_USER_SELECTED_FILES = readonly;
+				GCC_TREAT_WARNINGS_AS_ERRORS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphoneos*]" = YES;
 				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphonesimulator*]" = YES;
@@ -317,8 +367,11 @@
 				SWIFT_APPROACHABLE_CONCURRENCY = YES;
 				SWIFT_DEFAULT_ACTOR_ISOLATION = MainActor;
 				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_STRICT_CONCURRENCY = complete;
+				SWIFT_STRICT_MEMORY_SAFETY = YES;
+				SWIFT_TREAT_WARNINGS_AS_ERRORS = YES;
 				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
-				SWIFT_VERSION = 5.0;
+				SWIFT_VERSION = 6.0;
 				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Release;
@@ -343,6 +396,24 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		C0DE00000000000000000022 /* XCRemoteSwiftPackageReference "swift-format" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/swiftlang/swift-format.git";
+			requirement = {
+				kind = exactVersion;
+				version = 603.0.0;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		8B64C38B301BFC8800BF18DD /* Immich */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = Immich;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 000000000000000000000000 /* Project object */;
 }
