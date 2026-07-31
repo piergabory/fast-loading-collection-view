@@ -29,14 +29,11 @@ struct PhotoCollectionView: View {
                     }
                 }
             }
-            .padding()
         }
         .scrollEdgeEffectStyle(.soft, for: .all)
         .safeAreaBar(edge: .top) {
             if let message = model.errorMessage {
                 Text(message)
-            } else {
-                Text("Loaded \(model.posts.count) posts.")
             }
         }
         .task {
@@ -44,14 +41,17 @@ struct PhotoCollectionView: View {
             model.frontTagIDs = frontTags
             await model.loadPosts()
         }
+        .navigationSubtitle("Loaded \(model.posts.count) posts.")
         .background()
-        .colorScheme(.dark)
     }
 }
 
 #Preview {
-    PhotoCollectionView(
-        frontTags: ["9327ded7-eb63-468a-95e5-9500f5081df1"],
-        backTags: ["54392ce6-c1b2-48ea-a384-c6b113413bf3"]
-    )
+    NavigationStack {
+        PhotoCollectionView(
+            frontTags: ["9327ded7-eb63-468a-95e5-9500f5081df1"],
+            backTags: ["54392ce6-c1b2-48ea-a384-c6b113413bf3"]
+        )
+    }
+    .colorScheme(.dark)
 }

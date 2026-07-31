@@ -17,6 +17,7 @@ struct DashboardView: View {
                 ConnectionStatusCard(status: model.status)
                 tags(label: "BeReal/front", ids: model.frontTags)
                 tags(label: "BeReal/back", ids: model.backTags)
+                StatisticsView()
                 errorMessage
             }
             .safeAreaBar(edge: .bottom) {
@@ -67,4 +68,5 @@ struct DashboardView: View {
 
 #Preview {
     DashboardView()
+        .colorScheme(.dark)
 }

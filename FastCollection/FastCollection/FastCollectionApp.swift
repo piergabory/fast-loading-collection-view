@@ -10,6 +10,7 @@ struct FastCollectionApp: App {
     var body: some Scene {
         WindowGroup {
             DashboardView()
+                .colorScheme(.dark)
         }
     }
 }
