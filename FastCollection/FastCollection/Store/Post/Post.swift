@@ -7,7 +7,7 @@ struct Post: Identifiable, Sendable {
     let nextFrontPage: String?
     let nextBackPage: String?
 
-    var id: String {
+    nonisolated var id: String {
         front.id + back.id
     }
 }

@@ -1,7 +1,7 @@
 import Foundation
 import UIKit.UIImage
 
-struct MemoryCache {
+struct MemoryCache: Sendable {
     private let storage = NSCache<NSString, UIImage>()
 
     func check(_ postID: Post.ID) -> Bool {

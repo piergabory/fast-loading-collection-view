@@ -19,6 +19,7 @@ final class PostStore {
     var diskHitCount = 0
     var generationCount = 0
 
+    @discardableResult
     func get(_ post: Post) async throws -> UIImage {
         if let memoryHit = memoryCache.get(post.id) {
             memoryHitCount += 1

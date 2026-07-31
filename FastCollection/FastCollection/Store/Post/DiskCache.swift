@@ -40,6 +40,8 @@ actor DiskCache {
 
     @concurrent
     func get(_ postID: Post.ID) async -> UIImage? {
+        guard await check(postID) else { return nil }
+
         let path = await path(for: postID)
         do {
             let data = try Data(contentsOf: path)

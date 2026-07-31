@@ -7,14 +7,13 @@ import Observation
 final class DashboardViewModel {
     var status: ConnectionStatus = .disconnected
     var errorMessage: String?
-    var frontTags: [Tag.ID] = []
-    var backTags: [Tag.ID] = []
+    var postLoader = try! PostLoader(frontTags: [], backTags: [])
 
     func reload() async {
         status = .connecting
         do {
             let tags = try await Request.tags()
-            process(tags)
+            try process(tags)
             status = .connected
         } catch {
             errorMessage = error.localizedDescription
@@ -22,12 +21,14 @@ final class DashboardViewModel {
         }
     }
 
-    private func process(_ tags: [Tag]) {
-        frontTags = tags
+    private func process(_ tags: [Tag]) throws {
+        let frontTags = tags
             .filter { $0.value == "BeReal/front" }
             .map { $0.id }
-        backTags = tags
+        let backTags = tags
             .filter { $0.value == "BeReal/back" }
             .map { $0.id }
+
+        postLoader = try PostLoader(frontTags: frontTags, backTags: backTags)
     }
 }

@@ -1,3 +1,3 @@
-public struct Asset: Sendable, Decodable, Identifiable {
+public struct Asset: Sendable, Codable, Identifiable {
     public let id: String
 }
