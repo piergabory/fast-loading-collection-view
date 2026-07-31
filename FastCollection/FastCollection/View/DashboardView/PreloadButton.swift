@@ -1,14 +1,11 @@
 import SwiftUI
 
-struct PreloadControl: View {
+struct PreloadButton: View {
     @Environment(\.postStore)
     private var postStore: PostStore
 
     @Environment(\.postLoader)
     private var postLoader: PostLoader
-
-    @AppStorage("automatic-cache-warmup")
-    private var isAuto = true
 
     @State
     private var isBusy = false
@@ -21,11 +18,6 @@ struct PreloadControl: View {
     }
 
     var body: some View {
-        Toggle("Automatic warmup", isOn: $isAuto).task {
-            if isAuto {
-                await warmupCache()
-            }
-        }
         HStack {
             Button("Warm-up Cache", systemImage: "heat.waves") {
                 Task { await warmupCache() }

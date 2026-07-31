@@ -20,7 +20,7 @@ struct DashboardView: View {
                 }
                 Section {
                     StatisticsView()
-                    PreloadControl()
+                    PreloadButton()
                     ClearCacheButton()
                 } header: {
                     Text("Caching")
@@ -34,8 +34,8 @@ struct DashboardView: View {
                         - Network is much slower, the user will noticer. \
                         It's unavoidable, the goal is to minimise it.
                         
-                        Warm-up cache calls the network early, so the user \
-                        never has to see it.
+                        Warm-up pre-caches some posts, to reduce the \
+                        chance of the user seeing a network loader.
                         """
                     )
                 }
