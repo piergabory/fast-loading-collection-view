@@ -10,6 +10,7 @@ actor PostGenerator {
     let scale: CGFloat = 2
     let frontSize = CGSize(width: 60, height: 80)
     let backSize = CGSize(width: 150, height: 200)
+    let borderColor = UIColor.black
 
     @concurrent
     func generate(_ post: Post) async throws -> UIImage {
@@ -29,17 +30,26 @@ actor PostGenerator {
     @concurrent
     func compose(front: UIImage, back: UIImage) async -> UIImage {
         let backFrame = CGRect(origin: .zero, size: backSize)
-        let frontFrame = CGRect(origin: CGPoint(x: 2, y: 2), size: frontSize)
+        let frontFrame = CGRect(origin: CGPoint(x: 6, y: 6), size: frontSize)
+        let borderFrame = frontFrame.insetBy(dx: -1, dy: -1)
+        let border = unsafe CGPath(
+            roundedRect: borderFrame,
+            cornerWidth: 8,
+            cornerHeight: 8,
+            transform: nil
+        )
 
         return UIGraphicsImageRenderer(size: backSize).image { context in
+            let cgctx = context.cgContext
+
             back.draw(in: backFrame)
 
-            let cgctx = context.cgContext
-            cgctx.setFillColor(UIColor.white.cgColor)
-            cgctx.addRect(frontFrame.insetBy(dx: -1, dy: -1))
-            cgctx.fillPath()
-
             front.draw(in: frontFrame)
+
+            cgctx.setStrokeColor(borderColor.cgColor)
+            cgctx.setLineWidth(2)
+            cgctx.addPath(border)
+            cgctx.strokePath()
         }
     }
 

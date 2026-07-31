@@ -8,7 +8,6 @@ struct PostContainer<Content: View>: View {
         content
             .frame(maxWidth: .infinity, maxHeight: .infinity)
             .aspectRatio(3/4, contentMode: .fill)
-            .border(.secondary)
             .background(.background.secondary)
             .clipped()
     }

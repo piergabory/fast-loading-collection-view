@@ -20,7 +20,7 @@ struct ClearCacheButton: View {
     var body: some View {
         HStack {
             Button(
-                (isClearingCache ? "Clearing" : "Clear") + "Cache",
+                (isClearingCache ? "Clearing" : "Clear") + " cache",
                 systemImage: "trash",
                 role: .destructive
             ) {

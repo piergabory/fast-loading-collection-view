@@ -43,8 +43,8 @@ Your Immich library must contain tags with the exact values `BeReal/front` and `
 Open `FastCollection/FastCollection.xcodeproj`, select the `FastCollection` scheme, and run the app.
 
 ## Roadmap
-- [ ] Add corner radius to the thumbnails.
-- [ ] Run new prefetching jobs when the user reaches the last 200 cached assets
+- [x] Add corner radius to the thumbnails. (ish. I cheated eheh)
+- [x] Run new prefetching jobs when the user reaches the last 200 cached assets
 - [ ] Minor Refactoring:
   - [ ] Reword some types (PostLoader, PageLoader, PostStore... that's messy)
   - [ ] Factorise the image and post metadata disk caches with a generic type

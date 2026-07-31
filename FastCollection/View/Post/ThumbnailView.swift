@@ -14,7 +14,7 @@ struct ThumbnailView: View {
             let image = if let asset {
                 Image(uiImage: asset).resizable()
             } else {
-                Image(systemName: "questionmark.circle")
+                Image(systemName: "icloud.and.arrow.down")
             }
 
             image

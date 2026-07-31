@@ -2,11 +2,11 @@ struct CacheWarmupService {
     let postLoader: PostLoader
     let postStore: PostStore
 
-    func preloadCache() async throws {
+    func preloadCache(max: Int = 1000) async throws {
         try await postLoader.preload()
 
         for _ in 0...20 {
-            if postLoader.posts.count >= 1000 { break }
+            if postLoader.posts.count >= max { break }
             try await postLoader.loadNextPage()
         }
 
