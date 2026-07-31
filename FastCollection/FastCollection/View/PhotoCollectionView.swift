@@ -15,12 +15,7 @@ struct PhotoCollectionView: View {
 
     var body: some View {
         collectionView
-            .safeAreaBar(edge: .top) {
-                if let message = errorMessage {
-                    Text(message)
-                }
-            }
-            .task { await preload() }
+            .task { try? await model.preload() }
             .navigationSubtitle("Loaded \(model.posts.count) posts.")
     }
 
@@ -38,7 +33,7 @@ struct PhotoCollectionView: View {
     private var postThumbnails: some View {
         ForEach(model.posts) { post in
             ThumbnailView(post: post)
-                .task { await loadMoreAfter(post: post) }
+                .task { try? await model.loadMorePosts(after: post) }
                 .id(post.id)
         }
     }
@@ -49,22 +44,6 @@ struct PhotoCollectionView: View {
             ForEach(0..<100) { _ in
                 PlaceholderPostView()
             }
-        }
-    }
-
-    private func loadMoreAfter(post: Post) async {
-        do {
-            try await model.loadMorePosts(after: post)
-        } catch {
-            errorMessage = error.localizedDescription
-        }
-    }
-
-    private func preload() async {
-        do {
-            try await model.preload()
-        } catch {
-            errorMessage = error.localizedDescription
         }
     }
 }

@@ -36,6 +36,7 @@ final class PostLoader {
     func loadNextPage() async throws {
         if isLoading { return }
         isLoading = true
+        defer { isLoading = false }
 
         try await withThrowingTaskGroup { [frontLoader, backLoader] group in
             group.addTask { try await frontLoader.loadNextPage() }
@@ -43,13 +44,13 @@ final class PostLoader {
             try await group.waitForAll()
         }
         rebuildPostArray()
-        isLoading = false
     }
 
 
     func preload() async throws {
         if isLoading { return }
         isLoading = true
+        defer { isLoading = false }
         await withTaskGroup { [frontLoader, backLoader] group in
             group.addTask { await frontLoader.loadLocalPages() }
             group.addTask { await backLoader.loadLocalPages() }
@@ -68,7 +69,6 @@ final class PostLoader {
         }
 
         rebuildPostArray()
-        isLoading = false
     }
 
     func deleteStorage() async throws {
