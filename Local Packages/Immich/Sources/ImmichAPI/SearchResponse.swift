@@ -1,3 +1,3 @@
 public struct SearchResponse: Decodable {
-    public let assets: AssetPage
+    public let assets: Page<AssetMetadata>
 }

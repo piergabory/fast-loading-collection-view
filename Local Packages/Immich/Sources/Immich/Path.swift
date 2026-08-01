@@ -7,7 +7,7 @@ struct Path {
 
     static let metadata = Path(components: ["search", "metadata"])
 
-    static func thumbnail(id: Asset.ID) -> Self {
+    static func thumbnail(id: AssetMetadata.ID) -> Self {
         Path(components: ["assets", id, "thumbnail"])
     }
 }

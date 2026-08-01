@@ -45,9 +45,9 @@ Open `FastCollection/FastCollection.xcodeproj`, select the `FastCollection` sche
 ## Roadmap
 - [x] Add corner radius to the thumbnails. (ish. I cheated eheh)
 - [x] Run new prefetching jobs when the user reaches the last 200 cached assets
-- [ ] Minor Refactoring:
-  - [ ] Reword some types (PostLoader, PageLoader, PostStore... that's messy)
-  - [ ] Factorise the image and post metadata disk caches with a generic type
+- [x] Minor Refactoring:
+  - [x] Reword some types (PostLoader, PageLoader, PostStore... that's messy)
+  - [x] Factorise the image and post metadata disk caches with a generic type
 - [ ] Add a priority property to cached assets. The expected spread of asset request is likely following an inverse exponential of some kind, where the first ones display much more often. Adding a priority value would be useful for some optimisation:
   - [ ] Handle memory and storage pressure, dropping the lower priority assets first
   - [ ] Organise concurrent cache warmup processing with a prioqueue.

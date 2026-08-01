@@ -1,18 +1,13 @@
 import UIKit.UIImage
 import SwiftUI
 
-extension EnvironmentValues {
-    @Entry
-    var postStore = PostStore.global
-}
-
 @Observable
-final class PostStore {
-    private let diskCache = try! DiskCache()
+final class ThumbnailStore {
+    private let diskCache = try! DiskCache<UIImage>(name: "thumbnails")
     private let memoryCache = MemoryCache()
-    private let postGenerator = PostGenerator()
+    private let thumbnailGenerator = ThumbnailGenerator()
 
-    static let global = PostStore()
+    static let global = ThumbnailStore()
 
     var diskCacheCount = 0
     var memoryHitCount = 0
@@ -20,19 +15,19 @@ final class PostStore {
     var generationCount = 0
 
     @discardableResult
-    func get(_ post: Post) async throws -> UIImage {
+    func get(_ post: PostMetadata) async throws -> UIImage {
         if let memoryHit = memoryCache.get(post.id) {
             memoryHitCount += 1
             return memoryHit
         }
 
-        if let diskHit = await diskCache.get(post.id) {
+        if let diskHit = try? await diskCache.get(post.id) {
             diskHitCount += 1
             memoryCache.set(post.id, value: diskHit)
             return diskHit
         }
 
-        let generatedPost = try await postGenerator.generate(post)
+        let generatedPost = try await thumbnailGenerator.generate(post)
         store(post: post, asset: generatedPost)
         generationCount += 1
         return generatedPost
@@ -55,10 +50,10 @@ final class PostStore {
         diskCacheCount = try await diskCache.count()
     }
 
-    private func store(post: Post, asset: UIImage) {
+    private func store(post: PostMetadata, asset: UIImage) {
         Task {
             memoryCache.set(post.id, value: asset)
-            await diskCache.set(post.id, value: asset)
+            try? await diskCache.set(post.id, image: asset)
         }
     }
 }

@@ -4,7 +4,7 @@ import Foundation
 import Immich
 import ImmichAPI
 
-actor PostGenerator {
+actor ThumbnailGenerator {
     struct Failure: Error { }
 
     let scale: CGFloat = 2
@@ -13,7 +13,7 @@ actor PostGenerator {
     let borderColor = UIColor.black
 
     @concurrent
-    func generate(_ post: Post) async throws -> UIImage {
+    func generate(_ post: PostMetadata) async throws -> UIImage {
         let (frontData, backData) = try await getImageData(post)
 
         async let front = downsample(frontData, filling: frontSize)
@@ -72,7 +72,7 @@ actor PostGenerator {
     }
 
     @concurrent
-    private func getImageData(_ post: Post) async throws -> (Data, Data) {
+    private func getImageData(_ post: PostMetadata) async throws -> (Data, Data) {
         async let frontRequest = Request.thumbnail(for: post.front.id)
         async let backRequest = Request.thumbnail(for: post.back.id)
 

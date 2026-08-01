@@ -1,5 +1,5 @@
-public struct AssetPage: Codable, Sendable {
+public struct Page<Item: Codable & Sendable>: Codable, Sendable {
     public let count: Int
-    public let items: [Asset]
+    public let items: [Item]
     public let nextPage: String?
 }

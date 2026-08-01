@@ -1,8 +1,8 @@
 import ImmichAPI
 
-struct Post: Identifiable, Sendable {
-    let front: Asset
-    let back: Asset
+struct PostMetadata: Identifiable, Sendable {
+    let front: AssetMetadata
+    let back: AssetMetadata
 
     let nextFrontPage: String?
     let nextBackPage: String?

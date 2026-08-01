@@ -2,29 +2,29 @@ import Foundation
 import Immich
 import ImmichAPI
 
-final class PageLoader: Sendable {
+final class AssetMetadataPageLoader: Sendable {
     struct Failure: Error { }
+    typealias Cache = DiskCache<Page<AssetMetadata>>
 
     static let firstPage = "Initial"
-
     private let pageSize = 250
-    private let diskCache: PageDiskCache
+    
+    private let diskCache: Cache
     private let tagIds: [Tag.ID]
 
-    private(set) var loadedPages: [String: AssetPage] = [:]
+    private(set) var loadedPages: [String: Page<AssetMetadata>] = [:]
     private(set) var nextPage: String? = firstPage
 
     init(tagIds: [Tag.ID]) throws {
+        let salt = String(tagIds.joined(separator: "-").prefix(16))
+        self.diskCache = try Cache(name: "metadata-\(salt)")
         self.tagIds = tagIds
-        self.diskCache = try PageDiskCache(
-            name: String(tagIds.joined(separator: "-").prefix(16))
-        )
     }
 
     func loadLocalPages() async {
         var cursor = self.nextPage
         while let key = cursor {
-            let page = await diskCache.get(key)
+            let page = try? await diskCache.get(key)
             loadedPages[key] = page
             cursor = page?.nextPage
         }
@@ -35,25 +35,27 @@ final class PageLoader: Sendable {
         var page = loadedPages[nextPage]
 
         if page == nil {
-            page = await diskCache.get(nextPage)
+            page = try? await diskCache.get(nextPage)
         }
 
         if page == nil {
             page = try await loadFromRemote(nextPage)
         }
 
-        guard let page else { throw Failure() }
+        guard let page else {
+            throw Failure()
+        }
         loadedPages[nextPage] = page
         self.nextPage = page.nextPage
     }
 
-    func deleteStorage() async throws {
-        try await diskCache.deleteAll()
+    func flush() async throws {
+        try await diskCache.flush()
         loadedPages = [:]
         nextPage = Self.firstPage
     }
 
-    private func loadFromRemote(_ key: String?) async throws -> AssetPage {
+    private func loadFromRemote(_ key: String?) async throws -> Page<AssetMetadata> {
         if tagIds.isEmpty { throw Failure() }
 
         let result = try await Request.searchAssets(

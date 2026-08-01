@@ -32,7 +32,7 @@ extension Request where Body == Never {
         try await Request(path: .tags).send(expecting: [Tag].self)
     }
 
-    public static func thumbnail(for assetID: Asset.ID) async throws -> Data {
+    public static func thumbnail(for assetID: AssetMetadata.ID) async throws -> Data {
         try await Request(path: .thumbnail(id: assetID)).send()
     }
 }

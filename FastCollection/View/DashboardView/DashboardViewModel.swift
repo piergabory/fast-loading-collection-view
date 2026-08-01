@@ -5,19 +5,16 @@ import Observation
 
 @Observable @MainActor
 final class DashboardViewModel {
-    var status: ConnectionStatus = .disconnected
     var errorMessage: String?
-    var postLoader = try! PostLoader(frontTags: [], backTags: [])
+    var gallery: GalleryViewModel?
+    var statistics: StatisticsViewModel?
 
     func reload() async {
-        status = .connecting
         do {
             let tags = try await Request.tags()
             try process(tags)
-            status = .connected
         } catch {
             errorMessage = error.localizedDescription
-            status = .failed
         }
     }
 
@@ -29,6 +26,18 @@ final class DashboardViewModel {
             .filter { $0.value == "BeReal/back" }
             .map { $0.id }
 
-        postLoader = try PostLoader(frontTags: frontTags, backTags: backTags)
+        let postLoader = try PostMetadataLoader(
+            frontTags: frontTags,
+            backTags: backTags
+        )
+        let store = ThumbnailStore.global
+        gallery = GalleryViewModel(
+            metadataLoader: postLoader,
+            thumbnailStore: store
+        )
+        statistics = StatisticsViewModel(
+            metadataLoader: postLoader,
+            thumbnailStore: store
+        )
     }
 }

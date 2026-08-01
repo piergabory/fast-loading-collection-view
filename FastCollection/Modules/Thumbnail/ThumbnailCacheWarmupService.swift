@@ -1,6 +1,6 @@
-struct CacheWarmupService {
-    let postLoader: PostLoader
-    let postStore: PostStore
+struct ThumbnailCacheWarmupService {
+    let postLoader: PostMetadataLoader
+    let postStore: ThumbnailStore
 
     func preloadCache(max: Int = 1000) async throws {
         try await postLoader.preload()
@@ -15,7 +15,7 @@ struct CacheWarmupService {
     }
 
     private func preloadAllPosts() async {
-        let chunks: [[Post]] = postLoader.posts
+        let chunks: [[PostMetadata]] = postLoader.posts
             .reduce(into: [[]]) { chunks, post in
                 chunks[0].append(post)
                 if chunks.count > 100 {
@@ -35,7 +35,7 @@ struct CacheWarmupService {
 
 
     @concurrent
-    private func preload(chunk posts: [Post]) async {
+    private func preload(chunk posts: [PostMetadata]) async {
         for (index, post) in posts.enumerated() {
             do {
                 try await postStore.get(post)
